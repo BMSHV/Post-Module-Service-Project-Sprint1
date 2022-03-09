@@ -148,33 +148,6 @@ public class PostServiceTest {
 		
 	}
 	
-	@Test
-    void testUpdatePost() {
-
-        PostEntity postEntity = new PostEntity();
-
-        Post post = new Post();
-		post.setCategoryName("Medical");
-		post.setDonorId(1);
-		post.setFundCollected(50000);
-		post.setFundNeeded(60000);
-		post.setPostDate(LocalDate.now());
-		post.setPostId(1);
-		post.setUserDescription("Cancer");
-		post.setUserId(1);
-
-          Optional<PostEntity> optionalPost = Optional.of(postEntity);
-
-          when(postRepository.findById(1)).thenReturn(optionalPost);
-
-          PostEntity updatedPostEntity = postRepository.save(postEntity);
- 
-          entityModelUtil.postEntityToModel(updatedPostEntity);
-          postService.updatePost(post);
-
-          verify(postRepository, times(1)).save(entityModelUtil.postModelToEntity(post));
-    }
-	
 	
 
 }

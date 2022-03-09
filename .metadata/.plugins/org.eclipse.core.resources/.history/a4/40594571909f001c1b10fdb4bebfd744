@@ -46,9 +46,9 @@ public class PostController {
 	}
 	
 	@DeleteMapping("/delete/{uid}")
-	public ResponseEntity<?> deletePost(@PathVariable("uid") int postId) {
-		postService.deletePost(postId);
-		return new ResponseEntity<>("Post Deleted with id: "+postId, HttpStatus.OK);
+	public ResponseEntity<?> deletePost(@PathVariable("uid") int userId) {
+		postService.deletePost(userId);
+		return new ResponseEntity<>("Post Deleted with id: "+userId, HttpStatus.OK);
 	}
 	
 	@PutMapping("/update")

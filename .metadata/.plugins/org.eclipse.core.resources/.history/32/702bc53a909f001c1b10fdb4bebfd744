@@ -12,7 +12,7 @@ public interface PostService {
 	
 	public AllDetails getPostById(int postId);
 	
-	public void deletePost(int postId);
+	public void deletePost(int userId);
 	
 	public Post updatePost(Post post);
 	

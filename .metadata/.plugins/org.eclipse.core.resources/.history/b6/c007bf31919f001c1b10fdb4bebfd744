@@ -101,11 +101,11 @@ public class PostServiceImpl implements PostService {
 
 	/******************************************
 	 - Method Name      : deletePost
-	 - Input Parameters : int postId
-	 - Return type      : void
+	 - Input Parameters : Post post
+	 - Return type      : Post
 	 - Author           : Harshavardhan
 	 - Creation Date    : 07-03-2022
-	 - Description      : Deleting the values from  the database.
+	 - Description      : Storing the values into  the database.
 	  ******************************************/
 	
 	@Override
@@ -122,15 +122,6 @@ public class PostServiceImpl implements PostService {
 		}
 
 	}
-	
-	/******************************************
-	 - Method Name      : updatePost
-	 - Input Parameters : Post post
-	 - Return type      : Post
-	 - Author           : Harshavardhan
-	 - Creation Date    : 07-03-2022
-	 - Description      : Updating the values into  the database.
-	  ******************************************/
 
 	@Override
 	public Post updatePost(Post post) {
@@ -150,15 +141,6 @@ public class PostServiceImpl implements PostService {
 		return entityModelUtil.postEntityToModel(updatedPost);
 
 	}
-	
-	/******************************************
-	 - Method Name      : getCategoryDetails
-	 - Input Parameters : String categoryName
-	 - Return type      : Category
-	 - Author           : Harshavardhan
-	 - Creation Date    : 07-03-2022
-	 - Description      : Getting Category details from  the database.
-	  ******************************************/
 
 	public Category getCategoryDetails(String categoryName) {
 
@@ -166,46 +148,16 @@ public class PostServiceImpl implements PostService {
 
 	}
 
-
-	/******************************************
-	 - Method Name      : getUserDetails
-	 - Input Parameters : int userId
-	 - Return type      : User
-	 - Author           : Harshavardhan
-	 - Creation Date    : 07-03-2022
-	 - Description      : Getting user details from  the database.
-	  ******************************************/
-	
 	public User getUserDetails(int userId) throws UserNotFoundException {
 		
 		return userService.getUserDetails(userId);
 	}
-	
-
-	/******************************************
-	 - Method Name      : getDonorDetails
-	 - Input Parameters : int donorId
-	 - Return type      : Donor
-	 - Author           : Harshavardhan
-	 - Creation Date    : 07-03-2022
-	 - Description      : Getting donor details from  the database.
-	  ******************************************/
 
 	public Donor getDonorDetails(int donorId) {
 
 		return donorService.getDonorDetails(donorId);
 	}
 
-
-	/******************************************
-	 - Method Name      : getPostDetails
-	 - Input Parameters : int postId
-	 - Return type      : Post
-	 - Author           : Harshavardhan
-	 - Creation Date    : 07-03-2022
-	 - Description      : Getting Post details from  the database.
-	  ******************************************/
-	
 	@Override
 	public Post getPostDetails(int postId) throws PostNotFoundException {
 

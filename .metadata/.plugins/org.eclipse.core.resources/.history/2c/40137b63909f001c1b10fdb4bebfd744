@@ -35,14 +35,6 @@ public class PostServiceImpl implements PostService {
 	@Autowired
 	private EntityModelUtil entityModelUtil;
 	
-	/******************************************
-	 - Method Name      : createPost
-	 - Input Parameters : Post post
-	 - Return type      : Post
-	 - Author           : Harshavardhan
-	 - Creation Date    : 07-03-2022
-	 - Description      : Storing the values into  the database.
-	  ******************************************/
 
 	@Override
 	public Post createPost(Post post) {
@@ -65,15 +57,6 @@ public class PostServiceImpl implements PostService {
 		return entityModelUtil.postEntityToModel(postRepository.save(entityModelUtil.postModelToEntity(post)));
 
 	}
-	
-	/******************************************
-	 - Method Name      : getPostById
-	 - Input Parameters : int postId
-	 - Return type      : AllDetails
-	 - Author           : Harshavardhan
-	 - Creation Date    : 07-03-2022
-	 - Description      : Displaying the post,user,donor and category values.
-	  ******************************************/
 
 	@Override
 	public AllDetails getPostById(int postId) throws PostNotFoundException {
@@ -99,38 +82,20 @@ public class PostServiceImpl implements PostService {
 		return allDetails;
 	}
 
-	/******************************************
-	 - Method Name      : deletePost
-	 - Input Parameters : int postId
-	 - Return type      : void
-	 - Author           : Harshavardhan
-	 - Creation Date    : 07-03-2022
-	 - Description      : Deleting the values from  the database.
-	  ******************************************/
-	
 	@Override
-	public void deletePost(int postId) {
+	public void deletePost(int userId) {
 
-		Optional<PostEntity> optionalPostEntity = postRepository.findById(postId);
+		Optional<PostEntity> optionalPostEntity = postRepository.findById(userId);
 
 		if (optionalPostEntity.isPresent()) {
-			postRepository.deleteById(postId);
+			postRepository.deleteById(userId);
 		}
 
 		else {
-			throw new PostNotFoundException("Sorry ! Post is not available with id :" + postId);
+			throw new PostNotFoundException("Sorry ! User is not available with id :" + userId);
 		}
 
 	}
-	
-	/******************************************
-	 - Method Name      : updatePost
-	 - Input Parameters : Post post
-	 - Return type      : Post
-	 - Author           : Harshavardhan
-	 - Creation Date    : 07-03-2022
-	 - Description      : Updating the values into  the database.
-	  ******************************************/
 
 	@Override
 	public Post updatePost(Post post) {
@@ -142,7 +107,7 @@ public class PostServiceImpl implements PostService {
 
 		if (optionalPostEntity.isEmpty()) {
 
-			throw new PostNotFoundException("Sorry ! Post is not available with id :" + post.getPostId());
+			throw new PostNotFoundException("Sorry ! User is not available with id :" + post.getPostId());
 		}
 
 		PostEntity updatedPost = postRepository.save(entityModelUtil.postModelToEntity(post));
@@ -150,15 +115,6 @@ public class PostServiceImpl implements PostService {
 		return entityModelUtil.postEntityToModel(updatedPost);
 
 	}
-	
-	/******************************************
-	 - Method Name      : getCategoryDetails
-	 - Input Parameters : String categoryName
-	 - Return type      : Category
-	 - Author           : Harshavardhan
-	 - Creation Date    : 07-03-2022
-	 - Description      : Getting Category details from  the database.
-	  ******************************************/
 
 	public Category getCategoryDetails(String categoryName) {
 
@@ -166,46 +122,16 @@ public class PostServiceImpl implements PostService {
 
 	}
 
-
-	/******************************************
-	 - Method Name      : getUserDetails
-	 - Input Parameters : int userId
-	 - Return type      : User
-	 - Author           : Harshavardhan
-	 - Creation Date    : 07-03-2022
-	 - Description      : Getting user details from  the database.
-	  ******************************************/
-	
 	public User getUserDetails(int userId) throws UserNotFoundException {
 		
 		return userService.getUserDetails(userId);
 	}
-	
-
-	/******************************************
-	 - Method Name      : getDonorDetails
-	 - Input Parameters : int donorId
-	 - Return type      : Donor
-	 - Author           : Harshavardhan
-	 - Creation Date    : 07-03-2022
-	 - Description      : Getting donor details from  the database.
-	  ******************************************/
 
 	public Donor getDonorDetails(int donorId) {
 
 		return donorService.getDonorDetails(donorId);
 	}
 
-
-	/******************************************
-	 - Method Name      : getPostDetails
-	 - Input Parameters : int postId
-	 - Return type      : Post
-	 - Author           : Harshavardhan
-	 - Creation Date    : 07-03-2022
-	 - Description      : Getting Post details from  the database.
-	  ******************************************/
-	
 	@Override
 	public Post getPostDetails(int postId) throws PostNotFoundException {
 

@@ -149,7 +149,7 @@ public class PostServiceTest {
 	}
 	
 	@Test
-    void testUpdatePost() {
+    public void testUpdatePost() {
 
         PostEntity postEntity = new PostEntity();
 
