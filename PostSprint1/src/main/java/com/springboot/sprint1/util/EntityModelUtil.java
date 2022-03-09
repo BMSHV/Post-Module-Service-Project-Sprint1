@@ -1,11 +1,14 @@
 package com.springboot.sprint1.util;
 
+import org.springframework.stereotype.Component;
+
 import com.springboot.sprint1.entity.PostEntity;
 import com.springboot.sprint1.model.Post;
 
+@Component
 public class EntityModelUtil {
 	
-	public static PostEntity postModelToEntity(Post post) {
+	public   PostEntity postModelToEntity(Post post) {
 		
 		PostEntity postEntity = new PostEntity();
 		postEntity.setPostId(post.getPostId());
@@ -20,7 +23,7 @@ public class EntityModelUtil {
 		
 	}
 	
-	public static Post postEntityToModel(PostEntity postEntity) {
+	public  Post postEntityToModel(PostEntity postEntity) {
 		
 		Post post = new Post();
 		post.setPostId(postEntity.getPostId());

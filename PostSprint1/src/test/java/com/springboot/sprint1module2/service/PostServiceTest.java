@@ -24,6 +24,7 @@ import com.springboot.sprint1.model.Post;
 import com.springboot.sprint1.repository.PostRepository;
 import com.springboot.sprint1.service.PostService;
 import com.springboot.sprint1.service.PostServiceImpl;
+import com.springboot.sprint1.util.EntityModelUtil;
 
 @SpringBootTest(classes = PostServiceTest.class)
 public class PostServiceTest {
@@ -33,6 +34,9 @@ public class PostServiceTest {
 
 	@Mock
 	private PostRepository postRepository;
+	
+	@Mock
+	private EntityModelUtil entityModelUtil;
 
 	@Test
 	void testGetPostDetails() {
@@ -46,9 +50,22 @@ public class PostServiceTest {
 		post.setPostId(1);
 		post.setUserDescription("Cancer");
 		post.setUserId(1);
+		
+		Post post1 = new Post();
+		post1.setCategoryName("Medical");
+		post1.setDonorId(1);
+		post1.setFundCollected(50000);
+		post1.setFundNeeded(60000);
+		post1.setPostDate(LocalDate.now());
+		post1.setPostId(1);
+		post1.setUserDescription("Cancer");
+		post1.setUserId(1);
 
 		Optional<PostEntity> optionalPost = Optional.of(post);
 		int postId = 1;
+		
+		when(entityModelUtil.postModelToEntity(post1)).thenReturn(post);
+		when(entityModelUtil.postEntityToModel(post)).thenReturn(post1);
 
 		when(postRepository.findById(1)).thenReturn(optionalPost);
 
@@ -95,5 +112,42 @@ public class PostServiceTest {
 		postService.deletePost(post.getPostId());
 		verify(postRepository, times(1)).deleteById(postId);
 	}
+	
+	@Test
+	void testCreatePost() {
+		
+		Post post = new Post();
+		post.setCategoryName("Medical");
+		post.setDonorId(1);
+		post.setFundCollected(50000);
+		post.setFundNeeded(60000);
+		post.setPostDate(LocalDate.now());
+		post.setPostId(1);
+		post.setUserDescription("Cancer");
+		post.setUserId(1);
+		
+		PostEntity postEntity = new PostEntity();
+		postEntity.setCategoryName(post.getCategoryName());
+		postEntity.setDonorId(post.getDonorId());
+		postEntity.setFundCollected(post.getFundCollected());
+		postEntity.setFundNeeded(post.getFundNeeded());
+		postEntity.setPostDate(post.getPostDate());
+		postEntity.setPostId(post.getPostId());
+		postEntity.setUserDescription(post.getUserDescription());
+		postEntity.setUserId(post.getUserId());
+		
+		when(entityModelUtil.postModelToEntity(post)).thenReturn(postEntity);
+		when(entityModelUtil.postEntityToModel(postEntity)).thenReturn(post);
+		when(postRepository.save(postEntity)).thenReturn(postEntity);
+		
+		assertEquals(postEntity.getCategoryName(),post.getCategoryName());
+		assertEquals(postEntity.getDonorId(),post.getDonorId());
+		assertEquals(postEntity.getFundCollected(),post.getFundCollected());
+		assertEquals(postEntity.getFundNeeded(),post.getFundNeeded());
+			
+		
+	}
+	
+	
 
 }

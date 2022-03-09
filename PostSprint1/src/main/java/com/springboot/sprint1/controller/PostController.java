@@ -69,8 +69,9 @@ public class PostController {
 	}
 	
 	@GetMapping("/getbyuserid/{userid}")
-	public User fetchUser(@PathVariable("userid") int userId){
-		return userService.getUserDetails(userId);
+	public ResponseEntity<User> fetchUser(@PathVariable("userid") int userId){
+		User user = userService.getUserDetails(userId);
+		return new ResponseEntity<>(user, HttpStatus.OK);
 		
 	}
 	

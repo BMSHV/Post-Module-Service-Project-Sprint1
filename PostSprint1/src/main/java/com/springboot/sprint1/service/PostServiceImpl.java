@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.springboot.sprint1.entity.PostEntity;
 import com.springboot.sprint1.exception.PostNotFoundException;
+import com.springboot.sprint1.exception.UserNotFoundException;
 import com.springboot.sprint1.model.AllDetails;
 import com.springboot.sprint1.model.Category;
 import com.springboot.sprint1.model.Donor;
@@ -24,12 +25,16 @@ public class PostServiceImpl implements PostService {
 
 	@Autowired
 	private UserService userService;
-
+	
 	@Autowired
 	private DonorService donorService;
 
 	@Autowired
 	private CategoryService categoryService;
+	
+	@Autowired
+	private EntityModelUtil entityModelUtil;
+	
 
 	@Override
 	public Post createPost(Post post) {
@@ -44,11 +49,12 @@ public class PostServiceImpl implements PostService {
 
 		int userId = post.getUserId();
 		User user = userService.getUserDetails(userId);
-
+		
 		float fundNeeded = user.getUserFundAmount();
 		post.setFundNeeded(fundNeeded - fundCollected);
+				
 		
-		return EntityModelUtil.postEntityToModel(postRepository.save(EntityModelUtil.postModelToEntity(post)));
+		return entityModelUtil.postEntityToModel(postRepository.save(entityModelUtil.postModelToEntity(post)));
 
 	}
 
@@ -64,7 +70,7 @@ public class PostServiceImpl implements PostService {
 
 		}
 		PostEntity postEntity = optionalPost.get();
-		allDetails.setPost(EntityModelUtil.postEntityToModel(postEntity));
+		allDetails.setPost(entityModelUtil.postEntityToModel(postEntity));
 		User user = userService.getUserDetails(postEntity.getUserId());
 		Donor donor = donorService.getDonorDetails(postEntity.getDonorId());
 		Category category = categoryService.getCategoryDetails(postEntity.getCategoryName());
@@ -104,9 +110,9 @@ public class PostServiceImpl implements PostService {
 			throw new PostNotFoundException("Sorry ! User is not available with id :" + post.getPostId());
 		}
 
-		PostEntity updatedPost = postRepository.save(EntityModelUtil.postModelToEntity(post));
+		PostEntity updatedPost = postRepository.save(entityModelUtil.postModelToEntity(post));
 
-		return EntityModelUtil.postEntityToModel(updatedPost);
+		return entityModelUtil.postEntityToModel(updatedPost);
 
 	}
 
@@ -116,8 +122,8 @@ public class PostServiceImpl implements PostService {
 
 	}
 
-	public User getUserDetails(int userId) {
-
+	public User getUserDetails(int userId) throws UserNotFoundException {
+		
 		return userService.getUserDetails(userId);
 	}
 
@@ -133,7 +139,7 @@ public class PostServiceImpl implements PostService {
 		if (optionalPostEntity.isEmpty()) {
 			throw new PostNotFoundException("Sorry User is not found with id :" + postId);
 		}
-		return EntityModelUtil.postEntityToModel(optionalPostEntity.get());
+		return entityModelUtil.postEntityToModel(optionalPostEntity.get());
 	}
 
 }
